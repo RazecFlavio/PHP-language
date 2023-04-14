@@ -30,6 +30,8 @@ $contas[88888888888]['saldo'] -= 200;
 $contas[33888811899] = sacar($contas[33888811899], 150);
 $contas[33888811899] = depositar($contas[33888811899], 151);
 
+var_dump($contas[33888811899]);
+
 // toUpper($contas[33888811899]);
 
 // foreach ($contas as $idx => $conta) {
