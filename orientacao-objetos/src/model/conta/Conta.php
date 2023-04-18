@@ -1,11 +1,11 @@
 <?php
 
-require_once 'src/Titular.php';
+namespace Alura\banco\model\conta;
 
-class Conta
+abstract class Conta
 {
     private Titular $titular;
-    private float $saldo;
+    protected float $saldo;
     private static int $count = 0;
 
     public static function getCount(): int
@@ -13,17 +13,19 @@ class Conta
         return self::$count;
     }
 
+    abstract protected function percentTax(): float;
+
     public function __construct(Titular $titular)
     {
         $this->titular = $titular;
         $this->saldo = 0;
         self::$count++;
     }
-    public function __destruct()
-    {
-        echo "Codigo executara todas as vezes que a instancia deixar de existir.";
-        self::$count--;
-    }
+    // public function __destruct()
+    // {
+    //     echo "Codigo executara todas as vezes que a instancia deixar de existir.";
+    //     self::$count--;
+    // }
 
     public function getSaldo(): float
     {
@@ -32,12 +34,18 @@ class Conta
 
     public function sacar(float $valor): void
     {
-        if ($valor > $this->saldo) {
+
+        $tarifa = $valor * $this->percentTax();
+
+
+        $saque = $valor + $tarifa;
+
+        if ($saque > $this->saldo) {
             echo "Saldo insuficiente! ";
             return;
         }
 
-        $this->saldo -= $valor;
+        $this->saldo -= $saque;
     }
     public function depositar(float $valor): void
     {
@@ -48,12 +56,6 @@ class Conta
         $this->saldo += $valor;
     }
 
-    public function transferir(float $valor, Conta $destino): void
-    {
-        $this->sacar($valor);
-        $destino->depositar($valor);
-    }
-
     public function getTitularNome(): string
     {
         return $this->titular->getNome();
@@ -61,6 +63,11 @@ class Conta
     public function getTitularCPF(): string
     {
         return $this->titular->getCPF();
+    }
+
+    public function getTitularCidade(): string
+    {
+        return $this->titular->getEnderco()->getCidade();
     }
 
 }

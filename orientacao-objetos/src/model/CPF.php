@@ -1,6 +1,8 @@
 <?php
 
-class CPF
+namespace Alura\banco\model;
+
+final class CPF //nao consegue herdar.... ninguem consegue extender ela;
 {
     private string $cpf;
 

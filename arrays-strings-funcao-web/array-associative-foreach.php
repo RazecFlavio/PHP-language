@@ -32,6 +32,8 @@ $contas[33888811899] = depositar($contas[33888811899], 151);
 
 var_dump($contas[33888811899]);
 
+echo count($conta);
+
 // toUpper($contas[33888811899]);
 
 // foreach ($contas as $idx => $conta) {

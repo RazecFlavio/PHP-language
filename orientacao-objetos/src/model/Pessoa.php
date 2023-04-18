@@ -1,26 +1,28 @@
 <?php
 
-require_once 'src/CPF.php';
+namespace Alura\banco\model;
 
-class Titular
+use AcessoPropriedades;
+
+abstract class Pessoa
 {
+    use AcessoPropriedades;
     private CPF $cpf;
     private string $nome;
 
-    private function validaNome(string $nome)
+    final protected function validaNome(string $nome) //nao pode sobreescrever um metodo final
     {
         if (strlen($nome) < 5) {
             echo "Nome precisa ser maior que 5 caracters";
             exit();
         }
     }
-    public function __construct(string $cpf, string $nome)
+    public function __construct(CPF $cpf, string $nome)
     {
-        $this->cpf = new CPF($cpf);
+        $this->cpf = $cpf;
         $this->validaNome($nome);
         $this->nome = $nome;
     }
-
     public function getNome(): string
     {
         return $this->nome;
